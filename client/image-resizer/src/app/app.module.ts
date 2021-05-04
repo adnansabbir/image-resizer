@@ -9,10 +9,10 @@ import { UploadBoxComponent } from './components/upload-box/upload-box.component
 import { SizeSelectorComponent } from './components/size-selector/size-selector.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MaterialFileInputModule} from 'ngx-mat-file-input';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {NgxMatFileInputModule} from '@angular-material-components/file-input';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import {NgxMatFileInputModule} from '@angular-material-components/file-input';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatIconModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

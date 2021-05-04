@@ -1,3 +1,29 @@
 .size-selector{
-  height: 200px;
+  min-height: 200px;
+}
+
+.outer-wrapper-option{
+  background: rgba(0, 0, 0, 0.12);
+  min-height: 120px;
+  min-width: 120px;
+  margin: 12px
+}
+
+.size-box{
+  border: 1px solid rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+
+  .name{
+    font-weight: bold;
+    font-size: medium;
+  }
+
+  .ratio{
+    font-weight: normal;
+  }
+
+  .size{
+    font-weight: lighter;
+    color: rgba(0, 0, 0, 0.80);
+  }
 }
