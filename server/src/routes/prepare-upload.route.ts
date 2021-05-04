@@ -1,6 +1,7 @@
 import express, {Request, Response, NextFunction} from 'express';
 import {body} from 'express-validator'
 import {validateRequest} from "../middlewares/validate-request";
+import * as awsService from '../aws/s3-bucket';
 
 const router = express.Router();
 
@@ -16,8 +17,10 @@ router.post(
             .matches('^(png|jpg|jpeg)$')
     ],
     validateRequest,
-    (req: Request, res: Response, next: NextFunction) => {
-        res.status(200).send('Preparing url');
+    async (req: Request, res: Response, next: NextFunction) => {
+        const fileData = req.body;
+        const urls = await awsService.getSignedUrls(fileData.map((fd: any) => fd.fileName));
+        res.status(200).send(urls);
     })
 
 export {router as PrepareUploadUrl};
