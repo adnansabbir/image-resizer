@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 export interface SizeDataModel {
@@ -42,12 +42,13 @@ export class SizeSelectorComponent implements OnInit {
   ];
 
   sizeForm = new FormControl();
+  @Output() change: EventEmitter<SizeDataModel> = new EventEmitter<SizeDataModel>();
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.sizeForm.valueChanges.subscribe(console.log);
+    this.sizeForm.valueChanges.subscribe(res => this.change.emit(res));
   }
 
 }

@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="main" fxLayout="column" fxLayoutGap="24px" fxLayoutAlign="center center">
   <div class="section-1" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="12px" fxLayoutAlign="center center">
-    <app-upload-box fxFlex></app-upload-box>
-    <app-size-selector fxFlex></app-size-selector>
+    <app-upload-box fxFlex (change)="onFileSelect($event)"></app-upload-box>
+    <app-size-selector fxFlex (change)="onSizeSelect($event)"></app-size-selector>
   </div>
 </div>

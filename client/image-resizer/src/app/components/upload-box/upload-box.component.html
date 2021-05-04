@@ -1,10 +1,12 @@
-<!--<button mat-stroked-button (click)="fileInput.click()">Select File</button>-->
-<!--<input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" multiple>-->
 
 <div fxLayout="row" fxLayoutAlign="center center">
-  <mat-form-field>
-    <ngx-mat-file-input [formControl]="filesForm" [multiple]="true" [accept]="allowedFileFormat">
-      <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+  <mat-form-field appearance="outline">
+    <mat-label>Select File</mat-label>
+    <ngx-mat-file-input #removableInput placeholder="Select files" [formControl]="filesForm" [multiple]="true" [accept]="allowedFileFormat">
+      <mat-icon matSuffix>image</mat-icon>
     </ngx-mat-file-input>
+    <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+      <mat-icon>clear</mat-icon>
+    </button>
   </mat-form-field>
 </div>

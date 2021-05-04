@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AbstractControl, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-upload-box',
@@ -8,15 +8,17 @@ import {FormControl} from '@angular/forms';
 })
 export class UploadBoxComponent implements OnInit {
   filesForm = new FormControl();
+
+  @Output() change: EventEmitter<File[]> = new EventEmitter<File[]>();
+
   allowedFileFormat = '.png, .jpg, .jpeg';
 
   constructor() {
   }
 
   ngOnInit(): void {
-  }
-
-  onFileSelected($event: Event): void {
-    console.log($event);
+    this.filesForm.valueChanges.subscribe(res => {
+      console.log(res);
+    });
   }
 }
