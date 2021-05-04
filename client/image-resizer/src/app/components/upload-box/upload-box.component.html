@@ -1,5 +1,5 @@
 
-<div fxLayout="row" fxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutAlign="center center">
   <mat-form-field appearance="outline">
     <mat-label>Select File</mat-label>
     <ngx-mat-file-input #removableInput placeholder="Select files" [formControl]="filesForm" [multiple]="true" [accept]="allowedFileFormat">
@@ -9,4 +9,5 @@
       <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>
+  <span style="color: red">{{errorText}}</span>
 </div>

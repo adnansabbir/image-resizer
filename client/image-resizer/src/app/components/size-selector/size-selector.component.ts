@@ -42,13 +42,13 @@ export class SizeSelectorComponent implements OnInit {
   ];
 
   sizeForm = new FormControl();
-  @Output() change: EventEmitter<SizeDataModel> = new EventEmitter<SizeDataModel>();
+  @Output() select: EventEmitter<SizeDataModel> = new EventEmitter<SizeDataModel>();
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.sizeForm.valueChanges.subscribe(res => this.change.emit(res));
+    this.sizeForm.valueChanges.subscribe(res => this.select.emit(res));
   }
 
 }

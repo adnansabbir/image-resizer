@@ -19,14 +19,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.resizeForm.valueChanges.subscribe(console.log);
+    this.resizeForm.valueChanges.subscribe(console.log);
   }
 
-  onFileSelect($event: File[]): void {
+  onFileSelect($event: File[] | null): void {
     this.resizeForm.get('files')?.setValue($event);
   }
 
   onSizeSelect($event: SizeDataModel): void {
     this.resizeForm.get('size')?.setValue($event);
+  }
+
+  uploadFiles(): void {
+
   }
 }
