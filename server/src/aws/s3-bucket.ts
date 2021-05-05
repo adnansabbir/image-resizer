@@ -9,7 +9,7 @@ const sqs = new AWS.SQS();
 
 async function getSignedUrl(key: string) {
     return new Promise((resolve, reject) => {
-        let params = {Bucket: 'im-homework', Key: key};
+        let params = {Bucket: 'im-homework', Key: key, Tagging: "public=yes"};
         s3.getSignedUrl('putObject', params, (err, url) => {
             if (err) reject(err);
             resolve(url);
