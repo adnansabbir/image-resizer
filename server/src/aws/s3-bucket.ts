@@ -5,6 +5,7 @@ AWS.config.getCredentials(function (err) {
 });
 AWS.config.update({region: 'us-east-1'});
 const s3 = new AWS.S3();
+const sqs = new AWS.SQS();
 
 async function getSignedUrl(key: string) {
     return new Promise((resolve, reject) => {
@@ -28,4 +29,35 @@ async function getSignedUrls(keys: string[]) {
     return urls;
 }
 
-export {getSignedUrls};
+async function sendResizeTaskToQueue(fileUrl: string, fileSize: { height: number, width: number }): Promise<any> {
+    const param = {
+        MessageAttributes: {
+            fileUrl: {
+                DataType: 'String',
+                StringValue: fileUrl
+            },
+            height: {
+                DataType: 'String',
+                StringValue: fileSize.height.toString()
+            },
+            width: {
+                DataType: 'String',
+                StringValue: fileSize.width.toString()
+            }
+        },
+        MessageBody: 'Test task',
+        QueueUrl: 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework'
+    }
+
+    return new Promise((resolve, reject) => {
+        sqs.sendMessage(param, (err, data) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+export {getSignedUrls, sendResizeTaskToQueue};

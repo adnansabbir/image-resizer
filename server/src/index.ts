@@ -1,8 +1,9 @@
 import express from 'express';
 import {json} from "body-parser";
-import {PrepareUploadUrl} from "./routes/prepare-upload.route";
+import {PrepareUploadUrl} from "./routes/prepare-upload-url.route";
 import {errorHandler} from "./middlewares/error-handler";
 import cors from 'cors';
+import {ResizeImageRoute} from "./routes/resize-image.route";
 
 const app = express();
 app.use(json())
@@ -14,6 +15,7 @@ const corsOptions: cors.CorsOptions = {
 app.use(cors(corsOptions));
 
 app.use(PrepareUploadUrl);
+app.use(ResizeImageRoute);
 
 app.use(errorHandler);
 
