@@ -13,13 +13,19 @@ router.post(
             .withMessage('Please provide array of objects, min 1, max 5'),
         body('*.fileId', 'Provide a file id')
             .exists(),
-        body('*.fileExtension', 'Provide a file id')
+        body('*.fileName', 'Provide a file id')
+            .exists(),
+        body('*.type', 'Provide a file type')
             .exists()
     ],
     validateRequest,
     async (req: Request, res: Response, next: NextFunction) => {
         const fileData = req.body;
-        const urls = await awsService.getSignedUrls(fileData.map((fd: any) => `${fd.fileId}.${fd.fileExtension}`));
+        const payload = fileData.map((file: any) => ({
+            type: file.type,
+            fileName: `${file.fileId}.${file.fileName}`
+        }))
+        const urls = await awsService.getSignedUrls(payload);
         res.status(200).send(urls);
     })
 

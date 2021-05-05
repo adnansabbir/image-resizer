@@ -20,11 +20,7 @@ export class FileUploadServiceService {
   }
 
   uploadFilesForResize(files: File[], size: SizeDataModel): void {
-    const payload = files.map(file => {
-      const fileNameSplited = file.name.split('.');
-      const fileExtension = fileNameSplited[fileNameSplited.length - 1];
-      return {fileExtension, fileId: Guid.raw()};
-    });
+    const payload = files.map(file => ({fileName: file.name, type: file.type, fileId: Guid.raw()}));
     this.http.post<FileUploadResponseModel[]>(
       this.serverUrl + 'getuploadurl',
       payload

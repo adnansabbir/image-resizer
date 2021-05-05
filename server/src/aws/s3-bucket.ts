@@ -7,9 +7,9 @@ AWS.config.update({region: 'us-east-1'});
 const s3 = new AWS.S3();
 const sqs = new AWS.SQS();
 
-async function getSignedUrl(key: string) {
+async function getSignedUrl(key: string, type: string) {
     return new Promise((resolve, reject) => {
-        let params = {Bucket: 'im-homework', Key: key, Tagging: "public=yes"};
+        let params = {Bucket: 'im-homework', Key: key, Tagging: "public=yes", ContentType: type};
         s3.getSignedUrl('putObject', params, (err, url) => {
             if (err) reject(err);
             resolve(url);
@@ -17,12 +17,12 @@ async function getSignedUrl(key: string) {
     });
 }
 
-async function getSignedUrls(keys: string[]) {
+async function getSignedUrls(data: { fileName: string, type: string }[]) {
     const urls = [];
-    for (let key of keys) {
-        const signedUrl = await getSignedUrl(key);
+    for (let file of data) {
+        const signedUrl = await getSignedUrl(file.fileName, file.type);
         urls.push({
-            fileName: key,
+            fileName: file.fileName,
             url: signedUrl
         });
     }
