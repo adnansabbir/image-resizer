@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk';
-import { v4 as uuidv4 } from 'uuid'
+import {v4 as uuidv4} from 'uuid'
 
 AWS.config.getCredentials(function (err) {
     if (err) throw new Error('Error getting aws config');
@@ -52,34 +52,19 @@ async function getSignedUrls(fileNames: string[]) {
     return urls;
 }
 
-function createResizeTaskAttributes(fileUrl: string, height: number, width: number): any {
+function createResizeTaskAttributes(data: { fileUrl: string, fileSize: { height: number, width: number } }): any {
     return {
         Id: uuidv4(),
-        MessageAttributes: {
-            fileUrl: {
-                DataType: 'String',
-                StringValue: fileUrl
-            },
-            height: {
-                DataType: 'Number',
-                StringValue: height.toString()
-            },
-            width: {
-                DataType: 'Number',
-                StringValue: width.toString()
-            }
-        },
-        MessageBody: 'Resize task'
+        MessageBody: JSON.stringify(data)
     }
 }
 
 async function sendResizeTaskToQueue(data: { fileUrl: string, fileSize: { height: number, width: number } }[]): Promise<any> {
     const param = {
-        Entries: data.map(d => createResizeTaskAttributes(d.fileUrl, d.fileSize.height, d.fileSize.width)),
+        Entries: data.map(d => createResizeTaskAttributes(d)),
         QueueUrl: 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework'
     }
     return new Promise((resolve, reject) => {
-        // resolve(param);
         sqs.sendMessageBatch(param, (err, data) => {
             if (err) {
                 reject(err)
