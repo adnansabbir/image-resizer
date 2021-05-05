@@ -1,33 +1,27 @@
 const {workerData} = require("worker_threads");
 const AWS = require('aws-sdk');
+const { Consumer } = require('sqs-consumer');
 
 AWS.config.update({region: 'us-east-1'});
-const sqs = new AWS.SQS();
 const queueURL = 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework';
-console.log(`Worker ${workerData.serial} started`);
 
-function listenToSqs() {
-    console.log('listening to sqs');
-    const params = {
-        AttributeNames: [
-            "SentTimestamp"
-        ],
-        MaxNumberOfMessages: 1,
-        MessageAttributeNames: [
-            "All"
-        ],
-        QueueUrl: queueURL,
-        WaitTimeSeconds: 20
-    };
+const app = Consumer.create({
+    queueUrl: queueURL,
+    handleMessage: async (message) => {
+        let sqsMessage = JSON.parse(message.Body);
+        console.log(`Worker ${workerData.serial} got a message`)
+        console.log(sqsMessage);
+    },
+    sqs: new AWS.SQS()
+});
 
-    sqs.receiveMessage(params, (err, data) => {
-        if (err) {
-            console.log('An error has occurred', err);
-        } else {
-            console.log('Message received by ', workerData.serial);
-            console.log(data);
-        }
-    });
-}
+app.on('error', (err) => {
+    console.error(err.message);
+});
 
-listenToSqs();
+app.on('processing_error', (err) => {
+    console.error(err.message);
+});
+
+console.log(`Image Resize Worker ${workerData.serial} running`);
+app.start();
