@@ -1,17 +1,19 @@
 import express from 'express';
 import * as awsService from '../aws/s3-bucket';
+import {SQSMessageBody} from "../aws/models";
 
 const router = express.Router();
 
 router.post('/resize-images', async (req, res, next) => {
     try {
         const filesDataToResize = req.body;
-        const fileDataWithUrls: { fileUrl: string, fileSize: { height: number, width: number } }[] = [];
+        const fileDataWithUrls: SQSMessageBody[] = [];
         for (let fd of filesDataToResize) {
             const preSignedUrl = await awsService.getSignedUrl(fd.fileName);
             fileDataWithUrls.push({
                 fileUrl: preSignedUrl,
-                fileSize: fd.fileSize
+                fileSize: fd.fileSize,
+                fileName: fd.fileName
             })
         }
         await awsService.sendResizeTaskToQueue(fileDataWithUrls);

@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import {v4 as uuidv4} from 'uuid'
+import {SQSMessageBody} from "./models";
 
 AWS.config.getCredentials(function (err) {
     if (err) throw new Error('Error getting aws config');
@@ -52,14 +53,14 @@ async function getSignedUrls(fileNames: string[]) {
     return urls;
 }
 
-function createResizeTaskAttributes(data: { fileUrl: string, fileSize: { height: number, width: number } }): any {
+function createResizeTaskAttributes(data: SQSMessageBody): any {
     return {
         Id: uuidv4(),
         MessageBody: JSON.stringify(data)
     }
 }
 
-async function sendResizeTaskToQueue(data: { fileUrl: string, fileSize: { height: number, width: number } }[]): Promise<any> {
+async function sendResizeTaskToQueue(data: SQSMessageBody[]): Promise<any> {
     const param = {
         Entries: data.map(d => createResizeTaskAttributes(d)),
         QueueUrl: 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework'

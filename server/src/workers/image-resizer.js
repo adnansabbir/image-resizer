@@ -1,16 +1,18 @@
 const {workerData} = require("worker_threads");
 const AWS = require('aws-sdk');
-const { Consumer } = require('sqs-consumer');
+const {getFileFromUrl} = require("./helpers/helpers");
+const {Consumer} = require('sqs-consumer');
 
 AWS.config.update({region: 'us-east-1'});
 const queueURL = 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework';
+
+
 
 const app = Consumer.create({
     queueUrl: queueURL,
     handleMessage: async (message) => {
         let sqsMessage = JSON.parse(message.Body);
-        console.log(`Worker ${workerData.serial} got a message`)
-        console.log(sqsMessage);
+        const filePath = await getFileFromUrl(sqsMessage.fileUrl, sqsMessage.fileName, `${__dirname}/temp/images`);
     },
     sqs: new AWS.SQS()
 });
