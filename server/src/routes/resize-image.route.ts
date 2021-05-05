@@ -3,7 +3,7 @@ import * as awsService from '../aws/s3-bucket';
 
 const router = express.Router();
 
-router.post('/resize-image', async (req, res, next) => {
+router.post('/resize-images', async (req, res, next) => {
     const {fileUrl, fileSize} = req.body;
     try {
         await awsService.sendResizeTaskToQueue(fileUrl, fileSize);
