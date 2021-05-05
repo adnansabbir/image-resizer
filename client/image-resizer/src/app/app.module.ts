@@ -14,6 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {NgxMatFileInputModule} from '@angular-material-components/file-input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
     ReactiveFormsModule,
     MatIconModule,
     MatRadioModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

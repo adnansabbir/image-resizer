@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SizeDataModel} from './components/size-selector/size-selector.component';
+import {FileUploadServiceService} from './services/file-upload-service.service';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,10 @@ export class AppComponent implements OnInit {
     size: [null, Validators.required]
   });
 
-  constructor(private fb: FormBuilder) {
-
+  constructor(
+    private fb: FormBuilder,
+    private fileUploadService: FileUploadServiceService
+  ) {
   }
 
   ngOnInit(): void {
@@ -31,6 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   uploadFiles(): void {
-
+    const {files, size} = this.resizeForm.value;
+    this.fileUploadService.uploadFilesForResize(files, size);
   }
 }

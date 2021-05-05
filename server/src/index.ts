@@ -2,9 +2,16 @@ import express from 'express';
 import {json} from "body-parser";
 import {PrepareUploadUrl} from "./routes/prepare-upload.route";
 import {errorHandler} from "./middlewares/error-handler";
+import cors from 'cors';
 
 const app = express();
 app.use(json())
+
+const allowedOrigins = ['http://localhost:4200'];
+const corsOptions: cors.CorsOptions = {
+    origin: allowedOrigins
+}
+app.use(cors(corsOptions));
 
 app.use(PrepareUploadUrl);
 

@@ -9,7 +9,7 @@ const s3 = new AWS.S3();
 async function getSignedUrl(key: string) {
     return new Promise((resolve, reject) => {
         let params = {Bucket: 'im-homework', Key: key};
-        s3.getSignedUrl('getObject', params, (err, url) => {
+        s3.getSignedUrl('putObject', params, (err, url) => {
             if (err) reject(err);
             resolve(url);
         });
@@ -21,7 +21,7 @@ async function getSignedUrls(keys: string[]) {
     for (let key of keys) {
         const signedUrl = await getSignedUrl(key);
         urls.push({
-            key,
+            fileName: key,
             url: signedUrl
         });
     }
