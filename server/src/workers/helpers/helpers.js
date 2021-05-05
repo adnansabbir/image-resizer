@@ -31,7 +31,6 @@ const resizeImage = async (inputFilePath, outputFilePath, height, width) => {
     });
 }
 
-
 module.exports = {
     getFileFromUrl,
     resizeImage

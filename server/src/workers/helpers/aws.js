@@ -3,6 +3,7 @@ const fs = require('fs');
 
 AWS.config.update({region: 'us-east-1'});
 const s3QueueURL = 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework';
+const s3FailedTaskQueueURL = 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework-failed';
 const sqsQueueURL = 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework';
 const s3 = new AWS.S3();
 const sqs = new AWS.SQS();
@@ -55,4 +56,20 @@ const deleteTaskFromSQS = async (ReceiptHandle) => {
     });
 }
 
-module.exports = {AWS, sqsQueueURL, uploadFileToS3, deleteFileFromS3, deleteTaskFromSQS}
+const sendFailedResizeTaskToQueue = (data) => {
+    const param = {
+        MessageBody: JSON.stringify(data),
+        QueueUrl: s3FailedTaskQueueURL
+    }
+    return new Promise((resolve, reject) => {
+        sqs.sendMessage(param, (err, data) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+module.exports = {AWS, sqsQueueURL, uploadFileToS3, deleteFileFromS3, deleteTaskFromSQS, sendFailedResizeTaskToQueue}

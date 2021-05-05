@@ -1,20 +1,36 @@
-const {AWS, sqsQueueURL, uploadFileToS3, deleteFileFromS3, deleteTaskFromSQS} = require("./helpers/aws");
+const {
+    AWS,
+    sqsQueueURL,
+    uploadFileToS3,
+    deleteFileFromS3,
+    deleteTaskFromSQS,
+    sendFailedResizeTaskToQueue
+} = require("./helpers/aws");
 const {workerData} = require("worker_threads");
 const {getFileFromUrl, resizeImage} = require("./helpers/helpers");
-const {Consumer, SQSMessage} = require('sqs-consumer');
+const {Consumer} = require('sqs-consumer');
 
-const handleSqsResizeTask= async (message)=>{
+const handleSqsResizeTask = async (message) => {
     let {fileUrl, fileName, fileSize: {height, width}} = JSON.parse(message.Body);
-    const filePath = await getFileFromUrl(fileUrl, fileName, `${__dirname}/temp/images`);
+    try {
+        const filePath = await getFileFromUrl(fileUrl, fileName, `${__dirname}/temp/images`);
+        const resizedImagePath = `${__dirname}/temp/images/resized_${fileName}`;
+        const resizedFileName = `resized_${fileName}`;
 
-    const resizedImagePath = `${__dirname}/temp/images/resized_${fileName}`;
-    const resizedFileName = `resized_${fileName}`;
+        await resizeImage(filePath, resizedImagePath, height, width)
 
-    await resizeImage(filePath, resizedImagePath, height, width);
+        await uploadFileToS3(resizedImagePath, resizedFileName);
 
-    await uploadFileToS3(resizedImagePath, resizedFileName);
-    await deleteFileFromS3(fileName)
-    await deleteTaskFromSQS(message.ReceiptHandle);
+        await deleteFileFromS3(fileName);
+
+        await deleteTaskFromSQS(message.ReceiptHandle);
+    } catch (err) {
+        const payload = {
+            fileName,
+            status: 'Failed'
+        }
+        await sendFailedResizeTaskToQueue(payload)
+    }
 }
 
 const app = Consumer.create({
