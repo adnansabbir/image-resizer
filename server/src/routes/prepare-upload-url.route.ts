@@ -1,7 +1,7 @@
 import express, {Request, Response, NextFunction} from 'express';
 import {body} from 'express-validator'
 import {validateRequest} from "../middlewares/validate-request";
-import * as awsService from '../aws/s3-bucket';
+import * as awsService from '../aws/aws';
 
 const router = express.Router();
 

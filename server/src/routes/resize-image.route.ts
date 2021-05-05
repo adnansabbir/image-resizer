@@ -1,5 +1,5 @@
 import express from 'express';
-import * as awsService from '../aws/s3-bucket';
+import * as awsService from '../aws/aws';
 import {SQSMessageBody} from "../aws/models";
 
 const router = express.Router();
