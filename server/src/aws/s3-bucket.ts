@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import { v4 as uuidv4 } from 'uuid'
 
 AWS.config.getCredentials(function (err) {
     if (err) throw new Error('Error getting aws config');
@@ -29,7 +30,7 @@ async function getPreSignedUrlsForUpload(data: { fileName: string, type: string 
     return urls;
 }
 
-async function getSignedUrl(fileName: string) {
+async function getSignedUrl(fileName: string): Promise<string> {
     return new Promise((resolve, reject) => {
         let params = {Bucket: 'im-homework', Key: fileName};
         s3.getSignedUrl('getObject', params, (err, url) => {
@@ -51,28 +52,35 @@ async function getSignedUrls(fileNames: string[]) {
     return urls;
 }
 
-async function sendResizeTaskToQueue(fileUrl: string, fileSize: { height: number, width: number }): Promise<any> {
-    const param = {
+function createResizeTaskAttributes(fileUrl: string, height: number, width: number): any {
+    return {
+        Id: uuidv4(),
         MessageAttributes: {
             fileUrl: {
                 DataType: 'String',
                 StringValue: fileUrl
             },
             height: {
-                DataType: 'String',
-                StringValue: fileSize.height.toString()
+                DataType: 'Number',
+                StringValue: height.toString()
             },
             width: {
-                DataType: 'String',
-                StringValue: fileSize.width.toString()
+                DataType: 'Number',
+                StringValue: width.toString()
             }
         },
-        MessageBody: 'Test task',
+        MessageBody: 'Resize task'
+    }
+}
+
+async function sendResizeTaskToQueue(data: { fileUrl: string, fileSize: { height: number, width: number } }[]): Promise<any> {
+    const param = {
+        Entries: data.map(d => createResizeTaskAttributes(d.fileUrl, d.fileSize.height, d.fileSize.width)),
         QueueUrl: 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework'
     }
-
     return new Promise((resolve, reject) => {
-        sqs.sendMessage(param, (err, data) => {
+        // resolve(param);
+        sqs.sendMessageBatch(param, (err, data) => {
             if (err) {
                 reject(err)
             } else {
