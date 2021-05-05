@@ -1,25 +1,26 @@
+const {AWS, sqsQueueURL, uploadFileToS3, deleteFileFromS3, deleteTaskFromSQS} = require("./helpers/aws");
 const {workerData} = require("worker_threads");
-const AWS = require('aws-sdk');
 const {getFileFromUrl, resizeImage} = require("./helpers/helpers");
-const {Consumer} = require('sqs-consumer');
+const {Consumer, SQSMessage} = require('sqs-consumer');
 
-AWS.config.update({region: 'us-east-1'});
-const queueURL = 'https://sqs.us-east-1.amazonaws.com/799513362811/im-homework';
+const handleSqsResizeTask= async (message)=>{
+    let {fileUrl, fileName, fileSize: {height, width}} = JSON.parse(message.Body);
+    const filePath = await getFileFromUrl(fileUrl, fileName, `${__dirname}/temp/images`);
 
+    const resizedImagePath = `${__dirname}/temp/images/resized_${fileName}`;
+    const resizedFileName = `resized_${fileName}`;
 
+    await resizeImage(filePath, resizedImagePath, height, width);
+
+    await uploadFileToS3(resizedImagePath, resizedFileName);
+    await deleteFileFromS3(fileName)
+    await deleteTaskFromSQS(message.ReceiptHandle);
+}
 
 const app = Consumer.create({
-    queueUrl: queueURL,
+    queueUrl: sqsQueueURL,
     handleMessage: async (message) => {
-        let {fileUrl, fileName, fileSize: {height, width}} = JSON.parse(message.Body);
-        const filePath = await getFileFromUrl(fileUrl, fileName, `${__dirname}/temp/images`);
-        const resizedImagePath = await resizeImage(
-            filePath,
-            `${__dirname}/temp/images/resized_${fileName}`,
-            height,
-            width
-        );
-        console.log(resizedImagePath)
+        await handleSqsResizeTask(message);
     },
     sqs: new AWS.SQS()
 });
