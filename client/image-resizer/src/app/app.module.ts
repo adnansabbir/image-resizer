@@ -16,6 +16,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {HttpClientModule} from '@angular/common/http';
 import { FilesInProcessComponent } from './components/files-in-process/files-in-process.component';
+import { UploadUrlCopierListComponent } from './components/upload-url-copier-list/upload-url-copier-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FilesInProcessComponent } from './components/files-in-process/files-in-
     HeaderComponent,
     UploadBoxComponent,
     SizeSelectorComponent,
-    FilesInProcessComponent
+    FilesInProcessComponent,
+    UploadUrlCopierListComponent
   ],
   imports: [
     BrowserModule,

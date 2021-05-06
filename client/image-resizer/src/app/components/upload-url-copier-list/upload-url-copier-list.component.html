@@ -1,0 +1,10 @@
+<div class="url-copier-list" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="12px">
+  <p>Unfortunately due to cors error files cannot be uploaded from localhost, please upload files via postman</p>
+  <div class="url-copier" *ngFor="let url of uploadUrls" fxLayout="column" fxLayoutGap="8px">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span>Please upload <span class="file-name">{{extractFileName(url)}}</span> to</span>
+      <button mat-icon-button color="primary" (click)="copyUrl(url)"><mat-icon>content_copy</mat-icon></button>
+    </div>
+    <span class="url">{{url.fileUrl}}</span>
+  </div>
+</div>

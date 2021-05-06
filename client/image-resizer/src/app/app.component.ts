@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
   }
 
   resizeFiles(): void {
+    this.uploadUrls = [];
     const {size} = this.resizeForm.value;
     this.fileUploadService.resizeFiles(this.uploadUrls, size).subscribe(res => {
       this.filesInProcess = res;
