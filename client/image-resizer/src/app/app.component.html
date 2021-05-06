@@ -4,6 +4,9 @@
     <app-upload-box fxFlex (select)="onFileSelect($event)" class="upload-box"></app-upload-box>
     <app-size-selector fxFlex (select)="onSizeSelect($event)" class="size-selector"></app-size-selector>
   </div>
+  <div fxLayout="row" style="width: 100%" fxLayoutAlign="center center">
+    <app-files-in-process fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="30" [filesInProcess]="filesInProcess"></app-files-in-process>
+  </div>
   <button mat-stroked-button (click)="uploadFiles()" [disabled]="!resizeForm.valid" color="primary">Request Upload Urls</button>
   <button mat-stroked-button (click)="resizeFiles()" *ngIf="uploadUrls.length" color="primary">Resize Files</button>
 </div>

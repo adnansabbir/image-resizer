@@ -15,13 +15,15 @@ import {NgxMatFileInputModule} from '@angular-material-components/file-input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {HttpClientModule} from '@angular/common/http';
+import { FilesInProcessComponent } from './components/files-in-process/files-in-process.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     UploadBoxComponent,
-    SizeSelectorComponent
+    SizeSelectorComponent,
+    FilesInProcessComponent
   ],
   imports: [
     BrowserModule,

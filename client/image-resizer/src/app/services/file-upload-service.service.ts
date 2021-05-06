@@ -3,12 +3,14 @@ import {SizeDataModel} from '../components/size-selector/size-selector.component
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Guid} from 'guid-typescript';
 import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+
+export type FileResizeStatus = 'RequestSubmitted' | 'InQueue' | 'Failed' | 'Success';
 
 export interface FileUploadResponseModel {
   fileName: string;
-  url: string;
+  fileUrl: string;
   fileId: string;
+  status?: FileResizeStatus;
 }
 
 @Injectable({
@@ -41,7 +43,7 @@ export class FileUploadServiceService {
   private uploadFilesToUrls(files: File[], urlResponse: FileUploadResponseModel[]): void {
     const header = new HttpHeaders({});
     for (let i = 0; i < files.length; i++) {
-      this.http.put(urlResponse[i].url, files[i], {headers: header}).subscribe(console.log);
+      this.http.put(urlResponse[i].fileUrl, files[i], {headers: header}).subscribe(console.log);
     }
   }
 }

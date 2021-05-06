@@ -1,0 +1,18 @@
+<div fxLayout="column" class="file-list-in-process" fxLayoutGap="12px">
+  <div class="file-in-process" *ngFor="let file of filesInProcess" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayoutAlign="start start" fxLayoutGap="24px">
+      <img
+        src="{{file.fileUrl}}"
+        alt="{{file.fileName}}"
+        height="75px"
+        width="75px">
+      <div class="details">
+        <h2>{{extractFileName(file)}}</h2>
+        <span>{{file.status}}</span>
+      </div>
+    </div>
+    <button mat-fab color="primary" aria-label="Example icon button with a delete icon" *ngIf="file.status==='Success'">
+      <mat-icon>download</mat-icon>
+    </button>
+  </div>
+</div>

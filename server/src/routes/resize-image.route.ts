@@ -22,7 +22,8 @@ router.post('/api/resize-images', async (req, res, next) => {
             })
         }
         await awsService.sendResizeTaskToQueue(fileDataWithUrls);
-        res.status(200).send(fileDataWithUrls);
+        const fileDataWithUrlsWithStatus = fileDataWithUrls.map(fd=> ({...fd, status: 'RequestSubmitted'}))
+        res.status(200).send(fileDataWithUrlsWithStatus);
     } catch (err) {
         res.status(400).send('An error occurred');
     }
