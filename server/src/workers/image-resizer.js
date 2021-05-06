@@ -1,4 +1,3 @@
-const {listenToQueue, publishToQueue} = require("./helpers/message-broker");
 const {
     AWS,
     sqsQueueURL,
@@ -8,11 +7,11 @@ const {
     sendFailedResizeTaskToQueue
 } = require("./helpers/aws");
 const {workerData} = require("worker_threads");
-const {getFileFromUrl, resizeImage} = require("./helpers/helpers");
+const {getFileFromUrl, resizeImage, updateFileStatusOnServer} = require("./helpers/helpers");
 const {Consumer} = require('sqs-consumer');
 
 const handleSqsResizeTask = async (message) => {
-    let {fileUrl, fileName, fileSize: {height, width}} = JSON.parse(message.Body);
+    let {fileUrl, fileName, fileSize: {height, width}, fileId} = JSON.parse(message.Body);
     try {
         const filePath = await getFileFromUrl(fileUrl, fileName, `${__dirname}/temp/images`);
         const resizedImagePath = `${__dirname}/temp/images/resized_${fileName}`;
@@ -20,7 +19,9 @@ const handleSqsResizeTask = async (message) => {
 
         await resizeImage(filePath, resizedImagePath, height, width)
 
-        await uploadFileToS3(resizedImagePath, resizedFileName);
+        const newFile = await uploadFileToS3(resizedImagePath, resizedFileName);
+
+        updateFileStatusOnServer({fileId}, newFile, 'Success');
 
         await deleteFileFromS3(fileName);
 
@@ -30,15 +31,19 @@ const handleSqsResizeTask = async (message) => {
             fileName,
             status: 'Failed'
         }
-        await sendFailedResizeTaskToQueue(payload)
+        updateFileStatusOnServer({fileId}, null, 'Failed');
+        try {
+            await sendFailedResizeTaskToQueue(payload)
+        } catch (err) {
+
+        }
     }
 }
 
 const app = Consumer.create({
     queueUrl: sqsQueueURL,
     handleMessage: async (message) => {
-        // await publishToQueue('worker', 'Received new message');
-        // await handleSqsResizeTask(message);
+        await handleSqsResizeTask(message);
     },
     sqs: new AWS.SQS()
 });

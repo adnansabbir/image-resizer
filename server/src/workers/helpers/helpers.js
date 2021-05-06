@@ -1,6 +1,7 @@
 const fs = require('fs');
 const https = require('https');
 const sharp = require('sharp');
+const axios = require('axios')
 
 const getFileFromUrl = async (url, fileName, saveDir) => {
     return new Promise((resolve, reject) => {
@@ -31,7 +32,22 @@ const resizeImage = async (inputFilePath, outputFilePath, height, width) => {
     });
 }
 
+const updateFileStatusOnServer = (fileData, awsResponse, status) => {
+    axios.post('http://localhost:3000/api/file-resize-status-update',
+        {
+            fileData: fileData,
+            awsResponse: awsResponse,
+            status: status
+        })
+        .then(res => {
+        })
+        .catch(err => {
+
+        });
+}
+
 module.exports = {
     getFileFromUrl,
-    resizeImage
+    resizeImage,
+    updateFileStatusOnServer
 }
