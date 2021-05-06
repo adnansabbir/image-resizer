@@ -14,6 +14,7 @@
     <div>
       <a
         href="{{filesObject[file.fileId].fileUrl}}"
+        *ngIf="filesObject[file.fileId].status==='Success'"
         download
         mat-mini-fab
         color="primary">
