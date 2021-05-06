@@ -25,7 +25,7 @@ async function getPreSignedUrlsForUpload(data: { fileName: string, type: string,
         const signedUrl = await getPreSignedUrlForUpload(file.fileName, file.type);
         urls.push({
             fileName: file.fileName,
-            url: signedUrl,
+            fileUrl: signedUrl,
             fileId: file.fileId
         });
     }
