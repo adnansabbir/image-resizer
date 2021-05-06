@@ -1,7 +1,7 @@
 <div class="size-selector" fxLayout="column" fxLayoutAlign="center center">
   <h1>Select size</h1>
   <mat-radio-group aria-label="Select an option" [formControl]="sizeForm">
-    <mat-radio-button [value]="size" *ngFor="let size of sizeData">
+    <mat-radio-button [value]="size" *ngFor="let size of sizeData" color="primary">
       <div
         class="outer-wrapper-option"
         fxLayout="column"

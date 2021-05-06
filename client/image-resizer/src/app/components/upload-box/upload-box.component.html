@@ -1,13 +1,15 @@
-
 <div fxLayout="column" fxLayoutAlign="center center">
-  <mat-form-field appearance="outline">
-    <mat-label>Select File</mat-label>
-    <ngx-mat-file-input #removableInput placeholder="Select files" [formControl]="filesForm" [multiple]="true" [accept]="allowedFileFormat">
-      <mat-icon matSuffix>image</mat-icon>
-    </ngx-mat-file-input>
-    <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
-      <mat-icon>clear</mat-icon>
-    </button>
-  </mat-form-field>
+  <div fxLayout="row" style="width: 100%" fxLayoutAlign="center start">
+    <mat-form-field appearance="outline"  fxFlex="60">
+      <mat-label>Select File</mat-label>
+      <ngx-mat-file-input #removableInput placeholder="Select files" [formControl]="filesForm" [multiple]="true" [accept]="allowedFileFormat">
+        <mat-icon matSuffix>image</mat-icon>
+      </ngx-mat-file-input>
+      <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+    <button style="height: 48px; margin-top: 5px" fxFlex="40" mat-raised-button (click)="removableInput.open()" color="primary">Select file</button>
+  </div>
   <span style="color: red">{{errorText}}</span>
 </div>
