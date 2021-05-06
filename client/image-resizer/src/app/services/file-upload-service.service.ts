@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SizeDataModel} from '../components/size-selector/size-selector.component';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Guid} from 'guid-typescript';
 import {Observable} from 'rxjs';
 
@@ -40,10 +40,13 @@ export class FileUploadServiceService {
     );
   }
 
-  private uploadFilesToUrls(files: File[], urlResponse: FileUploadResponseModel[]): void {
-    const header = new HttpHeaders({});
-    for (let i = 0; i < files.length; i++) {
-      this.http.put(urlResponse[i].fileUrl, files[i], {headers: header}).subscribe(console.log);
-    }
+  // private uploadFilesToUrls(files: File[], urlResponse: FileUploadResponseModel[]): void {
+  //   for (let i = 0; i < files.length; i++) {
+  //     this.http.put(urlResponse[i].fileUrl, files[i], {headers: header}).subscribe(console.log);
+  //   }
+  // }
+
+  getFileStatus(fileIds: string[]): Observable<FileUploadResponseModel[]> {
+    return this.http.post<FileUploadResponseModel[]>(this.serverUrl + 'getFilesProgress', fileIds);
   }
 }

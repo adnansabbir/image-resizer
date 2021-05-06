@@ -36,7 +36,6 @@ router.post(
     async (req: Request, res: Response, next: NextFunction) => {
         const fileIds = req.body;
         const fileData = GetFileDateFromDB(fileIds);
-        console.log(fileData);
         res.status(200).send(fileData);
     })
 

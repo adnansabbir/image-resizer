@@ -23,3 +23,7 @@ export const GetFileDateFromDB = (fileIds: string[]): FileDataModel[] => {
 export const UpdateFileStatus = (fileId: string, status: 'RequestSubmitted' | 'InQueue' | 'Failed' | 'Success'): void => {
     FileData[fileId].status = status;
 }
+
+export const UpdateFileUrl = (fileId: string, url: string): void => {
+    FileData[fileId].fileUrl = url;
+}

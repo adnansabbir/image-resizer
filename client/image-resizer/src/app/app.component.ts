@@ -16,13 +16,17 @@ export class AppComponent implements OnInit {
   });
 
   uploadUrls: FileUploadResponseModel[] = [{
-    fileName: '939173d1-90e9-6358-3373-71053b551fe6.1.png',
-    fileUrl: 'https://im-homework.s3.amazonaws.com/939173d1-90e9-6358-3373-71053b551fe6.1.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620276415&Signature=yqNAB8vn6gjOXwYYlpK%2BAuj1gWM%3D&x-amz-tagging=public%3Dyes',
-    fileId: '939173d1-90e9-6358-3373-71053b551fe6'
+    fileName: 'da962a8e-e53c-d8f0-4996-5adf91c42e2f.Elephant_Large_PNG_Clipart-1047.png',
+    fileUrl: 'https://im-homework.s3.amazonaws.com/da962a8e-e53c-d8f0-4996-5adf91c42e2f.Elephant_Large_PNG_Clipart-1047.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620300679&Signature=RVmW9dWLDou4ma2LS2pHVVIiTo8%3D&x-amz-tagging=public%3Dyes',
+    fileId: 'da962a8e-e53c-d8f0-4996-5adf91c42e2f'
   }, {
-    fileName: '3e004b9d-540f-ac11-cdfd-7d0d4f1eb769.3.png',
-    fileUrl: 'https://im-homework.s3.amazonaws.com/3e004b9d-540f-ac11-cdfd-7d0d4f1eb769.3.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620276415&Signature=II9gJgld1edTN%2Bwt9GG%2ByOXkrNA%3D&x-amz-tagging=public%3Dyes',
-    fileId: '3e004b9d-540f-ac11-cdfd-7d0d4f1eb769'
+    fileName: 'cfe4eac7-907a-0b7f-bb58-635543a7b9b0.item.png',
+    fileUrl: 'https://im-homework.s3.amazonaws.com/cfe4eac7-907a-0b7f-bb58-635543a7b9b0.item.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620300679&Signature=6XjUpzNuvdczHtHgY3oolXJkLVY%3D&x-amz-tagging=public%3Dyes',
+    fileId: 'cfe4eac7-907a-0b7f-bb58-635543a7b9b0'
+  }, {
+    fileName: '3e6eb819-4514-2165-da4b-2eb554f9f707.pexels-tobi-620337.jpg',
+    fileUrl: 'https://im-homework.s3.amazonaws.com/3e6eb819-4514-2165-da4b-2eb554f9f707.pexels-tobi-620337.jpg?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fjpeg&Expires=1620300679&Signature=KbcO314IuZV3rQtcUfoGNCydt9Q%3D&x-amz-tagging=public%3Dyes',
+    fileId: '3e6eb819-4514-2165-da4b-2eb554f9f707'
   }];
   filesInProcess: FileUploadResponseModel[] = [];
 

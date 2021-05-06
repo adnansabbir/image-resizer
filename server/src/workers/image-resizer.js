@@ -23,9 +23,9 @@ const handleSqsResizeTask = async (message) => {
 
         updateFileStatusOnServer({fileId}, newFile, 'Success');
 
-        await deleteFileFromS3(fileName);
-
-        await deleteTaskFromSQS(message.ReceiptHandle);
+        // await deleteFileFromS3(fileName);
+        //
+        // await deleteTaskFromSQS(message.ReceiptHandle);
     } catch (err) {
         const payload = {
             fileName,
