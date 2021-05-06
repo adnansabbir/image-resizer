@@ -4,7 +4,7 @@ import {PrepareUploadUrl} from "./routes/prepare-upload-url.route";
 import {errorHandler} from "./middlewares/error-handler";
 import cors from 'cors';
 import {ResizeImageRoute} from "./routes/resize-image.route";
-import {FileResizeSuccess} from "./routes/file-resize-success";
+import {FileResizeStatusUpdate} from "./routes/file-resize-status-update";
 
 const app = express();
 app.use(json())
@@ -13,7 +13,7 @@ app.use(cors());
 
 app.use(PrepareUploadUrl);
 app.use(ResizeImageRoute);
-app.use(FileResizeSuccess);
+app.use(FileResizeStatusUpdate);
 
 app.use(errorHandler);
 

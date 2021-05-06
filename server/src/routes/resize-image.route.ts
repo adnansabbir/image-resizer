@@ -25,7 +25,7 @@ router.post('/api/resize-images', async (req, res, next) => {
         await awsService.sendResizeTaskToQueue(fileDataWithUrls);
         const fileDataWithUrlsWithStatus: FileDataModel[] = fileDataWithUrls.map(fd => ({
             ...fd,
-            status: 'RequestSubmitted'
+            status: 'InQueue'
         }))
 
         StoreFileDateToDB(fileDataWithUrlsWithStatus);

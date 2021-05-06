@@ -19,3 +19,7 @@ export const GetFileDateFromDB = (fileIds: string[]): FileDataModel[] => {
     fileIds.forEach(id => data.push(FileData[id]));
     return data;
 }
+
+export const UpdateFileStatus = (fileId: string, status: 'RequestSubmitted' | 'InQueue' | 'Failed' | 'Success'): void => {
+    FileData[fileId].status = status;
+}
