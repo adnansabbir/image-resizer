@@ -8,6 +8,7 @@ import {tap} from 'rxjs/operators';
 export interface FileUploadResponseModel {
   fileName: string;
   url: string;
+  fileId: string;
 }
 
 @Injectable({
@@ -30,7 +31,7 @@ export class FileUploadServiceService {
   }
 
   resizeFiles(files: FileUploadResponseModel[], size: SizeDataModel): Observable<FileUploadResponseModel[]> {
-    const payload = files.map(file => ({fileName: file.fileName, fileSize: {height: size.height, width: size.width}}));
+    const payload = files.map(file => ({fileName: file.fileName, fileSize: {height: size.height, width: size.width}, fileId: file.fileId}));
     return this.http.post<FileUploadResponseModel[]>(
       this.serverUrl + 'resize-images',
       payload

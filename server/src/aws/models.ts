@@ -1,5 +1,6 @@
 export interface SQSMessageBody {
     fileUrl: string,
     fileSize: { height: number, width: number },
-    fileName: string
+    fileName: string;
+    fileId: string;
 }

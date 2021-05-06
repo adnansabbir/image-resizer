@@ -17,10 +17,11 @@ router.post('/resize-images', async (req, res, next) => {
             fileDataWithUrls.push({
                 fileUrl: preSignedUrl,
                 fileSize: fd.fileSize,
-                fileName: fd.fileName
+                fileName: fd.fileName,
+                fileId: fd.fileId,
             })
         }
-        const urls = await awsService.sendResizeTaskToQueue(fileDataWithUrls);
+        await awsService.sendResizeTaskToQueue(fileDataWithUrls);
         res.status(200).send(fileDataWithUrls);
     } catch (err) {
         res.status(400).send('An error occurred');

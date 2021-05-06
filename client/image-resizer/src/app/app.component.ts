@@ -16,11 +16,13 @@ export class AppComponent implements OnInit {
   });
 
   uploadUrls: FileUploadResponseModel[] = [{
-    fileName: 'fff8a224-dab8-f7e9-16e3-6f0208b42f86.1.png',
-    url: 'https://im-homework.s3.amazonaws.com/fff8a224-dab8-f7e9-16e3-6f0208b42f86.1.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620201750&Signature=VyuDpLxsaYvijEz%2Bpljm37mBd20%3D&x-amz-tagging=public%3Dyes'
+    fileName: 'd879ca2d-c6c5-4858-dec9-14d5aa87a747.1.png',
+    url: 'https://im-homework.s3.amazonaws.com/d879ca2d-c6c5-4858-dec9-14d5aa87a747.1.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620274997&Signature=RfENXwpEsfsg83uTnz09hpGK110%3D&x-amz-tagging=public%3Dyes',
+    fileId: 'd879ca2d-c6c5-4858-dec9-14d5aa87a747'
   }, {
-    fileName: '51dc9c1e-cc29-64de-c592-f045c9decf53.3.png',
-    url: 'https://im-homework.s3.amazonaws.com/51dc9c1e-cc29-64de-c592-f045c9decf53.3.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620201750&Signature=EidxkvvLroHZt7rgo2cZcYKDVKw%3D&x-amz-tagging=public%3Dyes'
+    fileName: '61948682-f64c-396d-a8a9-3c82de823145.3.png',
+    url: 'https://im-homework.s3.amazonaws.com/61948682-f64c-396d-a8a9-3c82de823145.3.png?AWSAccessKeyId=AKIA3UJVVYF56FGPO3IY&Content-Type=image%2Fpng&Expires=1620274997&Signature=CjnFZo8Iigi1ZefjQmAEUWFzk8M%3D&x-amz-tagging=public%3Dyes',
+    fileId: '61948682-f64c-396d-a8a9-3c82de823145'
   }];
 
   constructor(
