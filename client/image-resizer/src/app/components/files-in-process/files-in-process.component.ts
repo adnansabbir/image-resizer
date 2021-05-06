@@ -25,7 +25,6 @@ export class FilesInProcessComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.longPoolFileStatus();
-    this.files = this.filesInProcess;
   }
 
   extractFileName(file: FileUploadResponseModel): string {
