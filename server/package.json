@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
+    "server": "ts-node-dev src/index.ts",
     "worker": "ts-node-dev src/worker.ts"
   },
   "author": "",
