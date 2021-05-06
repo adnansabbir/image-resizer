@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   resizeForm = this.fb.group({
     files: [null, Validators.required],
-    size: [{height: 1080, width: 1920}, Validators.required]
+    size: [null, Validators.required]
   });
 
   uploadUrls: FileUploadResponseModel[] = [];
