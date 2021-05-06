@@ -34,7 +34,7 @@ async function getPreSignedUrlsForUpload(data: { fileName: string, type: string,
 
 async function getSignedUrl(fileName: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        let params = {Bucket: 'im-homework', Key: fileName};
+        let params = {Bucket: 'im-homework', Key: fileName, Expires: 24 * 60 * 60 * 1000};
         s3.getSignedUrl('getObject', params, (err, url) => {
             if (err) reject(err);
             resolve(url);

@@ -2,6 +2,7 @@ import express, {Request, Response, NextFunction} from 'express';
 import {body} from 'express-validator'
 import {validateRequest} from "../middlewares/validate-request";
 import * as awsService from '../aws/aws';
+import {GetFileDateFromDB} from "../temporary-db/file-data";
 
 const router = express.Router();
 
@@ -31,19 +32,12 @@ router.post(
     })
 
 router.post(
-    '/api/getFiles',
-    [
-        body()
-            .isArray({min: 1, max: 5})
-            .withMessage('Please provide array of objects, min 1, max 5'),
-        body('*.fileName', 'Provide a file id')
-            .exists()
-    ],
-    validateRequest,
+    '/api/getFilesProgress',
     async (req: Request, res: Response, next: NextFunction) => {
-        const fileData = req.body;
-        const urls = await awsService.getSignedUrls(fileData.map((fd: any)=> fd.fileName));
-        res.status(200).send(urls);
+        const fileIds = req.body;
+        const fileData = GetFileDateFromDB(fileIds);
+        console.log(fileData);
+        res.status(200).send(fileData);
     })
 
 export {router as PrepareUploadUrl};

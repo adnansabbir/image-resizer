@@ -1,6 +1,7 @@
 import express from 'express';
 import * as awsService from '../aws/aws';
 import {SQSMessageBody} from "../aws/models";
+import {FileDataModel, StoreFileDateToDB} from "../temporary-db/file-data";
 
 const router = express.Router();
 
@@ -22,7 +23,13 @@ router.post('/api/resize-images', async (req, res, next) => {
             })
         }
         await awsService.sendResizeTaskToQueue(fileDataWithUrls);
-        const fileDataWithUrlsWithStatus = fileDataWithUrls.map(fd=> ({...fd, status: 'RequestSubmitted'}))
+        const fileDataWithUrlsWithStatus: FileDataModel[] = fileDataWithUrls.map(fd => ({
+            ...fd,
+            status: 'RequestSubmitted'
+        }))
+
+        StoreFileDateToDB(fileDataWithUrlsWithStatus);
+
         res.status(200).send(fileDataWithUrlsWithStatus);
     } catch (err) {
         res.status(400).send('An error occurred');
