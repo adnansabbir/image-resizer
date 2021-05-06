@@ -19,13 +19,14 @@ async function getPreSignedUrlForUpload(key: string, type: string) {
     });
 }
 
-async function getPreSignedUrlsForUpload(data: { fileName: string, type: string }[]) {
+async function getPreSignedUrlsForUpload(data: { fileName: string, type: string, fileId: string }[]) {
     const urls = [];
     for (let file of data) {
         const signedUrl = await getPreSignedUrlForUpload(file.fileName, file.type);
         urls.push({
             fileName: file.fileName,
-            url: signedUrl
+            url: signedUrl,
+            fileId: file.fileId
         });
     }
     return urls;

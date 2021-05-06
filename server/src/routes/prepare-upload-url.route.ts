@@ -23,7 +23,8 @@ router.post(
         const fileData = req.body;
         const payload = fileData.map((file: any) => ({
             type: file.type,
-            fileName: `${file.fileId}.${file.fileName}`
+            fileName: `${file.fileId}.${file.fileName}`,
+            fileId: file.fileId
         }))
         const urls = await awsService.getPreSignedUrlsForUpload(payload);
         res.status(200).send(urls);
