@@ -1,7 +1,7 @@
 # Image Resizer
 #### Node.js, Angular, S3 & SQS
 
-## Steps to start
+## Steps to start (Windows)
 - Clone repo
 - Intall npm packages
 - Add aws credential file
