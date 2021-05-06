@@ -8,11 +8,7 @@ import {ResizeImageRoute} from "./routes/resize-image.route";
 const app = express();
 app.use(json())
 
-const allowedOrigins = ['http://localhost:4300'];
-const corsOptions: cors.CorsOptions = {
-    origin: allowedOrigins
-}
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(PrepareUploadUrl);
 app.use(ResizeImageRoute);
