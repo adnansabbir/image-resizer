@@ -32,17 +32,12 @@ const resizeImage = async (inputFilePath, outputFilePath, height, width) => {
     });
 }
 
-const updateFileStatusOnServer = (fileData, awsResponse, status) => {
-    axios.post('http://localhost:3000/api/file-resize-status-update',
+const updateFileStatusOnServer = async (fileData, awsResponse, status) => {
+   return axios.post('http://localhost:3000/api/file-resize-status-update',
         {
             fileData: fileData,
             awsResponse: awsResponse,
             status: status
-        })
-        .then(res => {
-        })
-        .catch(err => {
-
         });
 }
 

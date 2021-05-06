@@ -21,7 +21,7 @@ const handleSqsResizeTask = async (message) => {
 
         const newFile = await uploadFileToS3(resizedImagePath, resizedFileName);
 
-        updateFileStatusOnServer({fileId}, newFile, 'Success');
+        await updateFileStatusOnServer({fileId}, newFile, 'Success');
 
         // await deleteFileFromS3(fileName);
         //
@@ -31,7 +31,7 @@ const handleSqsResizeTask = async (message) => {
             fileName,
             status: 'Failed'
         }
-        updateFileStatusOnServer({fileId}, null, 'Failed');
+        await updateFileStatusOnServer({fileId}, null, 'Failed');
         try {
             await sendFailedResizeTaskToQueue(payload)
         } catch (err) {
