@@ -6,6 +6,7 @@ export interface SizeDataModel {
   width: number;
   ratio: string;
   name: string;
+  divider: number;
 }
 
 @Component({
@@ -19,25 +20,29 @@ export class SizeSelectorComponent implements OnInit {
       height: 1080,
       width: 1920,
       ratio: '9:16',
-      name: 'Story'
+      name: 'Story',
+      divider: 33
     },
     {
       height: 1080,
       width: 1080,
       ratio: '1:1',
-      name: 'Square'
+      name: 'Square',
+      divider: 20
     },
     {
       height: 1080,
       width: 1350,
       ratio: '4:5',
-      name: 'Portrait'
+      name: 'Portrait',
+      divider: 25
     },
     {
       height: 1080,
       width: 566,
       ratio: '1.91:1',
-      name: 'Landscape'
+      name: 'Landscape',
+      divider: 15
     }
   ];
 

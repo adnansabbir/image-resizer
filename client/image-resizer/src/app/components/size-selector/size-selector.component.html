@@ -11,8 +11,8 @@
           fxLayout="column"
           fxLayoutAlign="center center"
           fxLayoutGap="20px"
-          [style.height.px]="size.height/20"
-          [style.width.px]="size.width/20">
+          [style.height.px]="size.width/size.divider"
+          [style.width.px]="size.height/size.divider">
           <span class="name">{{size.name}}</span>
           <span class="ratio">{{size.ratio}}</span>
           <span class="size">{{size.height}} x {{size.width}}</span>
