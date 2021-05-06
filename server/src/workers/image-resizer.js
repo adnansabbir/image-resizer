@@ -1,3 +1,4 @@
+const {listenToQueue, publishToQueue} = require("./helpers/message-broker");
 const {
     AWS,
     sqsQueueURL,
@@ -36,7 +37,8 @@ const handleSqsResizeTask = async (message) => {
 const app = Consumer.create({
     queueUrl: sqsQueueURL,
     handleMessage: async (message) => {
-        await handleSqsResizeTask(message);
+        // await publishToQueue('worker', 'Received new message');
+        // await handleSqsResizeTask(message);
     },
     sqs: new AWS.SQS()
 });
