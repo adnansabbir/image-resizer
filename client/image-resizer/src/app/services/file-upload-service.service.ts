@@ -15,7 +15,7 @@ export interface FileUploadResponseModel {
   providedIn: 'root'
 })
 export class FileUploadServiceService {
-  serverUrl = 'http://localhost:3000/';
+  serverUrl = 'http://localhost:3000/api/';
 
   constructor(
     private http: HttpClient

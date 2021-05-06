@@ -6,7 +6,7 @@ import * as awsService from '../aws/aws';
 const router = express.Router();
 
 router.post(
-    '/getuploadurl',
+    '/api/getuploadurl',
     [
         body()
             .isArray({min: 1, max: 5})
@@ -31,7 +31,7 @@ router.post(
     })
 
 router.post(
-    '/getFiles',
+    '/api/getFiles',
     [
         body()
             .isArray({min: 1, max: 5})

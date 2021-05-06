@@ -4,7 +4,7 @@ import {SQSMessageBody} from "../aws/models";
 
 const router = express.Router();
 
-router.post('/resize-images', async (req, res, next) => {
+router.post('/api/resize-images', async (req, res, next) => {
     try {
         const filesDataToResize = req.body;
         if (filesDataToResize.length > 5) {
